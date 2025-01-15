@@ -1,0 +1,40 @@
+@if (inputData) {
+    <div class="more-settings-dialog-content ur-row">
+        <nav>
+            <ur-tabs (linkChanged)="onLinkChanged($event)" [isVertical]="true">
+                <ur-tab
+                    [title]="('presenter.tool-force.label.reference' | translate) + ':'"
+                    [subtitle]="referenceLabel()"
+                    icon="move-frame"
+                    link="reference"
+                    [attr.data-testid]="'simple-force-reference-tab'"
+                ></ur-tab>
+                <ur-tab
+                    [title]="('presenter.tool-force.label.zero-sensor' | translate) + ':'"
+                    [subtitle]="zeroSensorLabel()"
+                    icon="zero-sensor"
+                    link="zero-sensor"
+                    [attr.data-testid]="'simple-force-zero-sensor-tab'"
+                ></ur-tab>
+            </ur-tabs>
+        </nav>
+
+        <hr class="vertical" />
+
+        @switch (activeTab) {
+            @case ('reference') {
+                <ur-simple-force-reference-settings
+                    [frames]="inputData.frames"
+                    [selectedFrame]="inputData.selectedFrame | clone"
+                    (selectedFrameChanged)="onSelectedFrameChanged($event)"
+                ></ur-simple-force-reference-settings>
+            }
+            @case ('zero-sensor') {
+                <ur-simple-force-zero-sensor-settings
+                    [zeroSensor]="inputData.zeroSensor | clone"
+                    (zeroSensorSettingsChanged)="onZeroSensorSettingsChanged($event)"
+                ></ur-simple-force-zero-sensor-settings>
+            }
+        }
+    </div>
+}

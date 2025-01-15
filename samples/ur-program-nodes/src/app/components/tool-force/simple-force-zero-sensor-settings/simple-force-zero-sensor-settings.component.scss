@@ -1,0 +1,11 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--spacing-03);
+    flex: 1;
+
+    ur-tab-input {
+        display: block;
+        width: 150px;
+    }
+}

@@ -1,0 +1,60 @@
+<ur-heading>{{ 'presenter.move-to.label.reference' | translate }}</ur-heading>
+
+<section class="ur-rich-text">
+    <p>{{ 'presenter.move-to.advanced_description.reference' | translate }}</p>
+</section>
+
+<section class="ur-row ur-gap-05">
+    <ur-dropdown
+        [label]="'presenter.move-to.label.frame' | translate"
+        [options]="frames()"
+        [selectedOption]="selectedFrame()"
+        (selectionChange)="setFrame($event)"
+        data-testid="frame-dropdown"
+        [required]="true"
+    ></ur-dropdown>
+    <ur-dropdown
+        [label]="'presenter.move-to.label.tcp' | translate"
+        [options]="tcpOptions()"
+        groupBy="endEffectorName"
+        [selectedOption]="selectedTcp()"
+        [required]="true"
+        (selectionChange)="setTcp($event)"
+        data-testid="tcp-dropdown"
+    ></ur-dropdown>
+</section>
+<ur-context-menu-divider></ur-context-menu-divider>
+<section class="ur-row ur-gap-05">
+    <div class="ur-column ur-gap-05">
+        <ur-heading size="small">{{ 'presenter.move-to.label.position' | translate }}</ur-heading>
+        @for (axis of positionAxes; track $index) {
+            <ur-tab-input
+                [tabInputValue]="displayWaypoint().pose[axis]"
+                valueType="float"
+                [precision]="settings().units.LENGTH.significantDigits"
+                [variables]="variables()"
+                [unit]="settings().units.LENGTH.symbol"
+                label="{{ axis | uppercase }}"
+                (valueChanged)="setPoseValue(axis, $event)"
+                [label]="axis.toUpperCase()"
+                [disabledTabs]="['VARIABLE', 'EXPRESSION']"
+            ></ur-tab-input>
+        }
+    </div>
+    <div class="ur-column ur-gap-05">
+        <ur-heading size="small">{{ 'presenter.move-to.label.rotation' | translate }}</ur-heading>
+        @for (axis of orientationAxes; track $index) {
+            <ur-tab-input
+                [tabInputValue]="displayWaypoint().pose[axis]"
+                valueType="float"
+                [precision]="settings().units.PLANE_ANGLE.significantDigits"
+                [variables]="variables()"
+                [unit]="settings().units.PLANE_ANGLE.symbol"
+                label="{{ axis | uppercase }}"
+                (valueChanged)="setPoseValue(axis, $event)"
+                [label]="axis.toUpperCase()"
+                [disabledTabs]="['VARIABLE', 'EXPRESSION']"
+            ></ur-tab-input>
+        }
+    </div>
+</section>

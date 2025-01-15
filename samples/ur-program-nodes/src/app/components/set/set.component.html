@@ -1,0 +1,74 @@
+@if (contributedNode && sources() && robotSettings) {
+    <div class="inline-component">
+    <ur-dropdown
+        [label]="'source' | translate"
+        [options]="sourcesOptions()"
+        [groupBy]="'groupIdName'"
+        [selectedOption]="selectedSourceOption()"
+        (selectionChange)="setSourceID($event)"
+        data-testid="select-source-dropdown"
+    ></ur-dropdown>
+
+        @if (contributedNode.parameters.signalOutput?.sourceID) {
+            <hr class="vertical" />
+        }
+
+    <div class="pill-container">
+            @if (selectedSourceOption() && selectedSignalOutput()?.sourceID) {
+        <ur-dropdown
+            [label]="'signal' | translate"
+            [options]="signals()"
+            [labelFactory]="signalLabelFactory"
+            [selectedOption]="selectedSourceSignal()?.signalID"
+            (selectionChange)="setSignalID($event)"
+            bindValue="signalID"
+            bindLabel="signalID"
+            data-testid="select-signal-dropdown"
+        ></ur-dropdown>
+            }
+    </div>
+
+        @if (contributedNode.parameters.signalOutput?.signalID) {
+            <div class="inline-component">
+                @if (translateService?.instant && selectedSignalType() === SignalValueType.BOOLEAN) {
+        <ur-dropdown
+            [label]="'presenter.set.value' | translate"
+            [options]="digitalValueOptions"
+            [selectedOption]="selectedSignalOption()"
+            [labelFactory]="getValueLabel"
+            (selectionChange)="setDigitalValue($event)"
+            data-testid="select-digital-value-dropdown"
+        ></ur-dropdown>
+                }
+
+                @if (selectedSignalType() === SignalValueType.FLOAT) {
+        <ur-dialog-input
+            [value]="selectedSignalOption()"
+            [precision]="1"
+            [label]="'presenter.set.value' | translate"
+            [unit]="getAnalogUnit()"
+            [validators]="valueValidators"
+            [validation]="{ required: true }"
+            data-testid="select-analog-value-pill"
+            type="number"
+            (valueChanged)="setAnalogValue($event)"
+        >
+        </ur-dialog-input>
+                }
+
+                @if (selectedSignalType() === SignalValueType.REGISTER) {
+        <ur-dialog-input
+            [value]="selectedSignalOption()"
+            [precision]="0"
+            [label]="'presenter.set.value' | translate"
+            [validation]="{ required: true }"
+            data-testid="register-value"
+            type="number"
+            (valueChanged)="setRegisterValue($event)"
+        >
+        </ur-dialog-input>
+                }
+    </div>
+        }
+</div>
+}

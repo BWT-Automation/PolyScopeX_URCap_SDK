@@ -1,0 +1,12 @@
+{
+  "applicationNodes": [
+    {
+      "translationPath": "assets/i18n/",
+      "behaviorURI": "Fast-Feature-Prototype.worker.js",
+      "presenterURI": "main.js",
+      "componentTagName": "fastfeature-fastfeature-fast-feature-prototype"
+    }
+  ],
+  "programNodes": [],
+  "smartSkills": []
+}

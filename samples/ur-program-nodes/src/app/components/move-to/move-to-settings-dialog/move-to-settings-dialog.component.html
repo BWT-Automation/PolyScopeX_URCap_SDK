@@ -1,0 +1,97 @@
+@if (inputData) {
+    <div class="more-settings-dialog-content ur-row">
+    <nav>
+        <ur-tabs (linkChanged)="onLinkChanged($event)" [isVertical]="true">
+            <ur-tab
+                    [title]="('presenter.move-to.label.movement' | translate) + ':'"
+                    [subtitle]="
+                        (inputData.advanced.speed.motionValue === Movement_Optimove
+                            ? 'presenter.move-to.label.optimove'
+                            : 'presenter.move-to.label.classic'
+                        ) | translate
+                    "
+                icon="move-speed"
+                link="speed"
+                [class.invalid]="!inputData.fieldValidation.speed || !inputData.fieldValidation.acceleration"
+                [attr.data-testid]="'move-to-speed-tab'"
+            >
+            </ur-tab>
+            <ur-tab
+                [disabled]="inputData.variable.selectedType !== 'VALUE' || !inputData.waypoint"
+                [title]="('presenter.move-to.label.reference' | translate) + ':'"
+                [subtitle]="referenceLabel()"
+                icon="move-frame"
+                link="reference"
+                [class.invalid]="!inputData.fieldValidation.frame || !inputData.fieldValidation.tcp"
+                [attr.data-testid]="'move-to-reference-tab'"
+            >
+            </ur-tab>
+            <ur-tab
+                [title]="('presenter.move-to.label.transform' | translate) + ':'"
+                [subtitle]="inputData.advanced.transform?.poseVariable?.name ?? ('presenter.move-to.label.none' | translate)"
+                icon="move-transform"
+                link="transform"
+                [class.invalid]="!inputData.fieldValidation.transform"
+                [attr.data-testid]="'move-to-transform-tab'"
+            >
+            </ur-tab>
+            <ur-tab
+                [title]="('presenter.move-to.label.blend' | translate) + ':'"
+                [subtitle]="
+                    (inputData.advanced.blend.enabled ? 'presenter.move-to.blend.enabled' : 'presenter.move-to.blend.disabled') | translate
+                "
+                icon="move-blend"
+                link="blend"
+                [class.invalid]="!inputData.fieldValidation.blend"
+                [attr.data-testid]="'move-to-blend-tab'"
+            >
+            </ur-tab>
+        </ur-tabs>
+    </nav>
+
+    <hr class="vertical" />
+
+        @if (inputData) {
+            @switch (activeTab) {
+                @case ('speed') {
+        <ur-move-to-speed-settings
+            [variables]="inputData.variables"
+            [moveType]="inputData.moveType"
+            [speedSettings]="inputData.advanced.speed | clone"
+            [units]="inputData.robotSettings.units"
+            (speedSettingsChanged)="onSpeedSettingsChanged($event)"
+        ></ur-move-to-speed-settings>
+                }
+
+                @case ('reference') {
+        <ur-move-to-reference-settings
+            [waypoint]="inputData.waypoint! | clone"
+            [frames]="inputData.frames"
+            [variables]="inputData.variables"
+            [settings]="inputData.robotSettings"
+            [endEffectors]="inputData.endEffectors"
+            (waypointChange)="onWaypointChange($event)"
+        ></ur-move-to-reference-settings>
+                }
+
+                @case ('transform') {
+        <ur-move-to-transform-settings
+            [transformSettings]="inputData.advanced.transform | clone"
+            [variables]="inputData.variables"
+            (transformSettingsChanged)="onTransformSettingsChanged($event)"
+        >
+        </ur-move-to-transform-settings>
+                }
+
+                @case ('blend') {
+        <ur-blend-settings
+            [blendSettings]="inputData.advanced.blend | clone"
+            [units]="inputData.robotSettings.units"
+            [variables]="inputData.variables"
+            (blendSettingsChanged)="onBlendSettingsChanged($event)"
+        ></ur-blend-settings>
+                }
+            }
+        }
+</div>
+}

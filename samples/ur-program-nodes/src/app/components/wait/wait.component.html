@@ -1,0 +1,118 @@
+@if (contributedNode?.parameters?.type && robotSettings) {
+    <div class="inline-component">
+    <ur-dropdown
+        [label]="'presenter.wait.label.waitType' | translate"
+        [options]="typeSelection"
+        [selectedOption]="contributedNode.parameters.type"
+        [required]="false"
+        (selectionChange)="setType($event)"
+        bindValue="value"
+        data-testid="select-event-type-dropdown"
+    ></ur-dropdown>
+
+    <hr class="vertical" />
+
+        @if (contributedNode?.parameters?.type === 'time') {
+            <div>
+        <ur-tab-input
+            [label]="'presenter.wait.label.time' | translate"
+            [tabInputValue]="getTime()"
+            [unit]="contributedNode.parameters.time?.entity.unit"
+            valueType="float"
+            [validators]="timeValidators"
+            [precision]="s.significantDigits"
+            [step]="1"
+            [variables]="variables()"
+            (valueChanged)="setTime($event)"
+            [inputLabel]="'presenter.wait.label.input_help' | translate"
+            [positiveDigitsOnly]="true"
+            data-testid="select-time-value-tab-input"
+        ></ur-tab-input>
+    </div>
+        }
+
+        @if (contributedNode?.parameters?.type === 'signalInput' && sources()) {
+            <div class="inline-component">
+        <ur-dropdown
+            [label]="'source' | translate"
+            [options]="sourcesOptions()"
+            [selectedOption]="selectedSourceOption()"
+            [groupBy]="'groupIdName'"
+            (selectionChange)="setSourceID($event)"
+            data-testid="select-source-dropdown"
+        ></ur-dropdown>
+        <div class="pill-container">
+                    @if (selectedSourceOption() && selectedSignalInput()?.sourceID) {
+            <ur-dropdown
+                [label]="'signal' | translate"
+                [options]="signals()"
+                [labelFactory]="signalLabelFactory"
+                [selectedOption]="selectedSourceSignal()?.signalID"
+                (selectionChange)="setSignalID($event)"
+                bindValue="signalID"
+                data-testid="select-signal-dropdown"
+            ></ur-dropdown>
+                    }
+        </div>
+
+                @if (contributedNode.parameters.signalInput?.signalID) {
+                    <div class="inline-component">
+                        @if (selectedSignalType() === SignalValueType.BOOLEAN) {
+            <ur-dropdown
+                [label]="'input' | translate"
+                [options]="digitalValueOptions"
+                [selectedOption]="signalValue()"
+                (selectionChange)="setDigitalValue($event)"
+                bindValue="value"
+                data-testid="select-digital-value-dropdown"
+            ></ur-dropdown>
+                        }
+                        @if (selectedSignalType() === SignalValueType.FLOAT) {
+            <ur-dropdown
+                [label]="'operator' | translate"
+                [options]="floatOperators"
+                [selectedOption]="contributedNode.parameters.signalInput?.floatOperator"
+                (selectionChange)="setAnalogOperator($event)"
+                data-testid="select-digital-value-dropdown"
+            ></ur-dropdown>
+                        }
+                        @if (selectedSignalType() === SignalValueType.FLOAT) {
+            <ur-dialog-input
+                type="number"
+                data-testid="select-analog-value"
+                [label]="'input' | translate"
+                [unit]="getAnalogUnit()"
+                [value]="contributedNode.parameters.signalInput?.value?.value ?? 0"
+                [validators]="analogValueValidators"
+                (valueChanged)="setAnalogValue($event)"
+            >
+            </ur-dialog-input>
+                        }
+                        @if (selectedSignalType() === SignalValueType.REGISTER) {
+            <ur-dropdown
+                [label]="'operator' | translate"
+                [options]="registerOperators"
+                [selectedOption]="registerOperator()"
+                (selectionChange)="setRegisterOperator($event)"
+                data-testid="select-digital-value-dropdown"
+            ></ur-dropdown>
+                        }
+
+                        @if (selectedSignalType() === SignalValueType.REGISTER) {
+            <ur-dialog-input
+                type="number"
+                [validation]="{ required: true }"
+                [precision]="0"
+                data-testid="select-register-value"
+                [label]="'input' | translate"
+                [value]="signalValue()"
+                (valueChanged)="setRegisterValue($event)"
+            >
+            </ur-dialog-input>
+                        }
+        </div>
+                }
+    </div>
+        }
+</div>
+}

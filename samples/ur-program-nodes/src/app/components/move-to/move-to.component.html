@@ -1,0 +1,58 @@
+@if (contributedNode && robotSettings && waypointVariables && fieldValidation) {
+    <div class="inline-component">
+        <ur-dropdown
+            [label]="'presenter.move-to.label.move_type' | translate"
+            [options]="moveTypes"
+            [selectedOption]="contributedNode.parameters.moveType"
+            bindValue="value"
+            (selectionChange)="setMoveType($event.value)"
+            data-testid="move-type-dropdown"
+        >
+        </ur-dropdown>
+
+        @if (tabinputValue()) {
+            <ur-tab-input
+                [label]="
+                    (contributedNode.parameters.variable.selectedType === 'VALUE'
+                        ? 'presenter.move-to.label.name'
+                        : contributedNode.parameters.variable.selectedType === 'VARIABLE'
+                          ? 'presenter.move-to.label.variable'
+                          : 'presenter.move-to.label.expression'
+                    ) | translate
+                "
+                [label]="'presenter.move-to.label.waypoint' | translate"
+                [variables]="waypointVariables"
+                [tabInputValue]="tabinputValue()"
+                valueType="string"
+                (valueChanged)="setPointType($event)"
+                [validators]="[variableNameValidator, gridVariableNameValidator]"
+                [valid]="fieldValidation.point"
+                data-testid="waypoint-variable-tabinput"
+            ></ur-tab-input>
+        }
+
+        @if (contributedNode.parameters.variable.selectedType === 'VALUE') {
+            <ur-button
+                class="waypoint-button"
+                [type]="fieldValidation.position ? 'filled' : 'invalid'"
+                data-testid="set-edit-waypoint-button"
+                (handleClick)="openMoveScreenClicked()"
+            >
+                {{
+                    (contributedNode.parameters.waypoint ? 'presenter.move-to.label.edit_point' : 'presenter.move-to.label.teach_point')
+                        | translate
+                }}
+            </ur-button>
+        }
+
+        <ur-button
+            (handleClick)="openAdvancedSettingsDialog()"
+            [disabled]="inputsDisabled()"
+            data-testid="move-to-more-settings-button"
+            [type]="advancedSettingsIsValid ? 'filled' : 'invalid'"
+            icon="external-link"
+        >
+            {{ 'presenter.move-to.label.more' | translate }}</ur-button
+        >
+    </div>
+}

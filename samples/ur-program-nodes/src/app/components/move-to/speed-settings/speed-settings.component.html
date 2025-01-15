@@ -1,0 +1,97 @@
+<ur-heading>{{ 'presenter.move-to.label.movement' | translate }}</ur-heading>
+<section class="ur-rich-text">
+    <p>{{ 'presenter.move-to.advanced_description.movement' | translate }}</p>
+</section>
+<ur-dropdown
+    [label]="'presenter.move-to.label.motion_value' | translate"
+    [options]="motionValueOptions"
+    [selectedOption]="speedSettings().motionValue"
+    (selectionChange)="setMotionValue($event)"
+    data-testid="motionvalue-dropdown"
+></ur-dropdown>
+
+@if (speedSettings().motionValue === Movement_Classic) {
+<div class="input-row">
+    <ur-tab-input
+        [label]="'presenter.move-to.label.speed' | translate"
+            [tabInputValue]="convertedSpeed()"
+            [unit]="this.speedUnit().symbol"
+            [precision]="this.speedUnit().significantDigits"
+        [positiveDigitsOnly]="true"
+        (valueChanged)="setSpeed($event)"
+        [validators]="[this.validateSpeed]"
+            [variables]="variables()"
+        valueType="float"
+            [inputLabel]="getInputLabelText(this.speedUnit().quantity.quantity)"
+        data-testid="speed-variable-tabinput"
+    ></ur-tab-input>
+    <ur-tab-input
+        [label]="'presenter.move-to.label.acceleration' | translate"
+            [tabInputValue]="convertedAcceleration()"
+            [unit]="this.accelerationUnit().symbol"
+            [precision]="this.accelerationUnit().significantDigits"
+        [positiveDigitsOnly]="true"
+        (valueChanged)="setAcceleration($event)"
+        [validators]="[this.validateAcceleration]"
+            [variables]="variables()"
+        valueType="float"
+            [inputLabel]="getInputLabelText(this.accelerationUnit().quantity.quantity)"
+        data-testid="acceleration-variable-tabinput"
+    ></ur-tab-input>
+</div>
+} @else {
+    <div class="input-row">
+        <ur-dialog-input
+            type="number"
+            [label]="'presenter.move-to.label.speed' | translate"
+            [value]="speedSettings().optiMoveSpeed + ''"
+            [unit]="'%'"
+            [validation]="{ min: 1, max: 100 }"
+            [translations]="{
+                rangeUnderflowMessage:
+                    'presenter.validation.number-too-small'
+                    | translate
+                        : {
+                              name: 'presenter.move-to.label.speed' | translate | lowercase,
+                              value: 1
+                          },
+                rangeOverflowMessage:
+                    'presenter.validation.number-too-large'
+                    | translate
+                        : {
+                              name: 'presenter.move-to.label.speed' | translate | lowercase,
+                              value: 100
+                          }
+            }"
+            [positiveDigitsOnly]="true"
+            (valueChanged)="setOptiMoveSpeed($event)"
+            data-testid="optimove-speed"
+        ></ur-dialog-input>
+        <ur-dialog-input
+            type="number"
+            [label]="'presenter.move-to.label.acceleration' | translate"
+            [value]="speedSettings().optiMoveAcceleration + ''"
+            [unit]="'%'"
+            [validation]="{ min: 1, max: 100 }"
+            [translations]="{
+                rangeUnderflowMessage:
+                    'presenter.validation.number-too-small'
+                    | translate
+                        : {
+                              name: 'presenter.move-to.label.acceleration' | translate | lowercase,
+                              value: 1
+                          },
+                rangeOverflowMessage:
+                    'presenter.validation.number-too-large'
+                    | translate
+                        : {
+                              name: 'presenter.move-to.label.acceleration' | translate | lowercase,
+                              value: 100
+                          }
+            }"
+            [positiveDigitsOnly]="true"
+            (valueChanged)="setOptiMoveAcceleration($event)"
+            data-testid="optimove-acceleration"
+        ></ur-dialog-input>
+    </div>
+}

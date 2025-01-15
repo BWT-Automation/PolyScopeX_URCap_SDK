@@ -1,0 +1,10 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--spacing-03);
+    flex: 1;
+
+    ur-dropdown {
+        width: 150px;
+    }
+}

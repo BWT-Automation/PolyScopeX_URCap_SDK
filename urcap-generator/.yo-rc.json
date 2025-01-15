@@ -1,0 +1,30 @@
+{
+  "generator-urcap": {
+    "headless": false,
+    "answers": {
+      "contributionTypes": {
+        "hasWeb": true,
+        "hasDocker": false,
+        "hasRos2": false
+      },
+      "metadata": {
+        "vendorName": "BWT Automation",
+        "vendorId": "fastfeature",
+        "urcapName": "Fast Feature Prototype",
+        "urcapId": "fastfeature"
+      },
+      "frontend": {
+        "components": [
+          {
+            "nodeType": "applicationNode",
+            "nodeName": "Fast-Feature-Prototype",
+            "tagName": "fastfeature-fastfeature-fast-feature-prototype",
+            "componentName": "FastFeaturePrototype",
+            "nodeTitle": "Fast Feature Prototype"
+          }
+        ],
+        "webFramework": "angular"
+      }
+    }
+  }
+}

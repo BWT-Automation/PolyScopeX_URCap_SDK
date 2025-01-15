@@ -1,0 +1,24 @@
+<ur-heading>{{ 'presenter.tool-force.label.zero-sensor' | translate }}</ur-heading>
+<section class="ur-rich-text">
+    <p>{{ 'presenter.tool-force.advanced_description.zero-sensor' | translate }}</p>
+</section>
+<ur-checkbox
+    labelPos="after"
+    [label]="'presenter.tool-force.label.zero-sensor' | translate"
+    [checked]="zeroSensor.entity.enabled"
+    (handleChange)="setZeroSensorEnabledValue($event)"
+    class="zero-sensor-checkbox"
+    data-testid="zero-sensor-checkbox"
+></ur-checkbox>
+<ur-tab-input
+    [label]="'presenter.tool-force.label.waiting' | translate"
+    [unit]="'Sec'"
+    [tabInputValue]="getZeroSensor()"
+    [disabled]="!zeroSensor.entity.enabled"
+    [disabledTabs]="['VARIABLE', 'EXPRESSION']"
+    valueType="float"
+    (valueChanged)="setZeroSensor($event)"
+    [positiveDigitsOnly]="true"
+    class="waiting-input"
+    data-testid="waiting-input"
+></ur-tab-input>

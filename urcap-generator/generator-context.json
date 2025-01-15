@@ -1,0 +1,29 @@
+{
+  "versions": {
+    "thirdparty": {
+      "angular": "18.2.0",
+      "angulareslint": "~18.3.0",
+      "eslint": "8.57.0",
+      "eslintunusedimports": "3.2.0",
+      "ngxbuildplus": "^18.0.0",
+      "rxjs": "7.8.1",
+      "threads": "1.7.0",
+      "typescript": "5.5.4",
+      "typescripteslint": "7.18.0",
+      "zonejs": "0.14.10"
+    },
+    "ur": {
+      "uiangularcomponents": "2.6.2",
+      "contributionapi": "38.1.2",
+      "urcaputils": "1.1.0",
+      "utilitiesunits": "5.7.1",
+      "designtokens": "0.11.0",
+      "uimodels": "0.23.0"
+    }
+  },
+  "docker": {
+    "sampleproxy": "",
+    "developmentimage": "universalrobots/urcap_polyscopex_ros2:3.1.5-humble-dev",
+    "runtimeimage": "universalrobots/urcap_polyscopex_ros2:3.1.5-humble-runtime"
+  }
+}

@@ -1,0 +1,23 @@
+<div *ngIf="applicationNode" class="component">
+    <div class="section">
+        <div >
+            <ur-button 
+            class="button" 
+            [attr.data-testid]="'simple-rest-get_btn'"
+            type="cta" 
+            (clicked)="getExample()">
+                GET Example
+            </ur-button>
+        </div>
+        &nbsp;
+        <div >
+            <ur-button 
+            class="button" 
+            [attr.data-testid]="'simple-rest-post_btn'"
+            type="cta" 
+            (clicked)="postExample()">
+                POST Example
+            </ur-button>
+        </div>
+    </div>
+</div>

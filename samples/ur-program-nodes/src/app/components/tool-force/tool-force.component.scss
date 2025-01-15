@@ -1,0 +1,52 @@
+@import '../shared';
+
+.inline-component {
+    display: flex;
+
+    .axis-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-block: var(--spacing-02);
+
+        &.x {
+            --border-color: var(--red-70);
+        }
+
+        &.y {
+            --border-color: var(--green-70);
+        }
+
+        &.z {
+            --border-color: var(--blue-70);
+        }
+    }
+
+    ::ng-deep {
+        .ur-switch {
+            gap: 0;
+        }
+    }
+
+    .more-button {
+        align-self: center;
+        display: flex;
+        align-items: center;
+    }
+
+    .test {
+        align-self: center;
+        margin-top: var(--spacing-05);
+
+        display: flex;
+        align-items: center;
+
+        > span {
+            font-size: var(--font-size-30);
+            line-height: var(--font-lineheight-20);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-font-secondary);
+            margin-left: var(--spacing-03);
+        }
+    }
+}
